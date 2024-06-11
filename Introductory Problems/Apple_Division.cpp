@@ -1,33 +1,30 @@
-#include <bits/stdc++.h>
-#define int long long
-#define IOS ios::sync_with_stdio(0),cin.tie(0)
+#include<iostream>
+#include<vector>
+#include<cmath>
+#include<climits>
 using namespace std;
-int n,m = 0,arr[21];
 
-void dp(){
-    int ans = LONG_LONG_MAX;
-    for(int i=0;i<(1<<n);i++)
-    {
-        int sum = 0;
-        for(int j=0;j<n;j++)
-        {
-            if(1<<j & i)
-            {
-                sum += arr[j];
+int main() {
+    int n;
+    cin >> n;
+    long long m = 0; // 計算所有元素的總和
+    vector<long long> v(n); // 向量大小為 n
+    for (int i = 0; i < n; i++) {
+        cin >> v[i];
+        m += v[i];
+    }
+
+    long long ans = LLONG_MAX; // 初始化 ans 為 long long int 的最大值
+    for (int i = 0; i < (1 << n); i++) { // 生成所有可能的子集
+        long long sum = 0;
+        for (int j = 0; j < n; j++) {
+            if (i & (1 << j)) { // 檢查第 j 位是否為 1
+                sum += v[j];
             }
         }
-        ans = min(ans,abs(m - sum - sum));
+        ans = min(ans, abs(m - 2 * sum)); // 更新最小的絕對差值
     }
-    cout<<ans<<"\n";
-}
+    cout << ans << endl;
 
-signed main(){
-    IOS;
-    cin>>n;
-    for(int i=0;i<n;i++)
-    {
-        cin>>arr[i];
-        m += arr[i];
-    }
-    dp();
+    return 0;
 }
